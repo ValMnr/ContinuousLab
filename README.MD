@@ -4,9 +4,7 @@ This project is a continuous lab where we use differents tools to acquire skills
 
 ## Installation
 
-
     $ git clone https://github.com/ValMnr/ContinuousLab
-    $ cd ContinousLab
     $ npm install
 
 
