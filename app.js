@@ -1,22 +1,10 @@
-const express = require('express')
-const app = express()
-var users = require('./src/users.js')
-
-app.get('/', (req, res)=> {
-    res.setHeader('Content-Type', 'text/plain');
-    res.status(200);
-    res.send('Use url /hello/yourname');
-})
-app.get('/hello/:name', (req, res) => {
-    res.setHeader('Content-Type', 'text/plain');
-    res.status(200);
-    if(req.params.name === "valentinMonnier"){
-        res.send('Hello, I`m Valentin Monnier');
-    }else{
-        res.send('Hello '+ req.params.name);
-    }
+// Import a module
+const http = require('http');
+const url = require('url');
+const querystring = require('querystring');
+const handles = require('./src/handle.js')
 
 
-})
 
-app.listen(3000);
+// Declare an http server
+http.createServer(handles.serverHandle).listen(3000);

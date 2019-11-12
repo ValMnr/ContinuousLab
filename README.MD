@@ -1,9 +1,22 @@
+# NodeJs Introduction
+
+This project is a continuous lab where we use differents tools to acquire skills in Node.Js
+
+## Installation
 
 
-This is the introduction to NodeJs, using ExpressJs
+    $ git clone https://github.com/ValMnr/ContinuousLab
+    $ cd ContinousLab
+    $ npm install
 
-To install the project : 
--> git clone 
--> cd ContinuousLab
--> npm i 
--> npm start
+
+## Running the project
+
+    $ npm start
+
+
+## Author
+Valentin MONNIER
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
