@@ -7,11 +7,9 @@ This project is a continuous lab where we use differents tools to acquire skills
     $ git clone https://github.com/ValMnr/ContinuousLab
     $ npm install
 
-
 ## Running the project
 
     $ npm start
-
 
 ## Author
 Valentin MONNIER
