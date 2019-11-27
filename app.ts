@@ -7,8 +7,8 @@ const ejs = require("ejs")
 const metrics = require('./src/metrics.ts')
 const server= require('./src/server.ts')
 
-var express = require('express');
-var app = express();
+//var express = require('express');
+//var app = express();
 
 /**
  * 
