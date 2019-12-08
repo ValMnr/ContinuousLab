@@ -9,14 +9,19 @@
 <body class="container">
 
     <h1>Hello
-        <%= name %>
+        <p>Test</p>
     </h1>
     <button class="btn btn-success" id="show-metrics">
         Bring the metrics
     </button>
     <div id="metrics"></div>
 
-    
+    <button class="btn btn-danger" href="/login" onClick='document.location.href="/login"'>
+        Log In
+      </button>
+    <button class="btn btn-danger" href="/logout" onClick='document.location.href="/logout"'>
+        Logout
+      </button>
 <script>
     $('#show-metrics').click((e) => {
         e.preventDefault();
@@ -27,7 +32,7 @@
             $('#metrics').append(content.join("\n"));
         });
     })
-</script>
+</script> 
 </body>
 
 </html>

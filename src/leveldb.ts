@@ -11,6 +11,13 @@ export class LevelDB {
       const encoded = encoding(leveldown(path), { valueEncoding: 'json' })
       return levelup(encoded)
     }
+    static close(){
+      
+
+    }
+    static clear(path: string){
+      
+    }
   }
 
 

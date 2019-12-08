@@ -5,6 +5,7 @@ const handles = require('./src/handle.js')
 const path = require('path')
 const ejs = require("ejs")
 const metrics = require('./src/metrics.ts')
+const mongoDB = require ('./src/mongodb.ts')
 const server= require('./src/server.ts')
 
 //var express = require('express');
