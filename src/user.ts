@@ -14,74 +14,41 @@ const userModel = Mongoose.model('user', userSchema)
 export { userModel }
 
 
-
 export class UserHandler {
 
-
-
-
-
-  
-  public  createUser(req:any, callback: (error: Error | null, id: any | null) => void) {
-
-    userModel.findOne({ email: req.body[0].email },(err,result)=>{
-      if (err) throw 'Email already taken ' + req.body[0].email
+  public createUser(req: any, callback: (error: Error | null, id: any | null) => void) {
+    console.log(req.body)
+    userModel.findOne({ email: req.body.email }, (err, result) => {
+      if (err) throw 'Email already taken ' + req.body.email
       const newUser = new userModel({
-        username: req.body[0].username,
-        email: req.body[0].email,
-        password: bcrypt.hashSync(req.body[0].password, 10)
+        username: req.body.username,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 10)
       })
       newUser.save((err, user) => {
-        if (err) callback(err,null)
+        if (err) callback(err, null)
         else {
-        callback (null,user)
-        
+          callback(null, user)
         }
       })
-      
     })
-    
+
   }
 
-  
-  public  authUser(req:any, callback: (error: Error | null, id: any ) => void) {
 
-    console.log(req.body)
+  public authUser(req: any, callback: (error: Error | null, id: any) => void) {
 
-    const user =  userModel.findOne( {email: req.body[0].email },(err: Error|null,result?: any)=>{
+    const user = userModel.findOne({ email: req.body.email }, (err: Error | null, result?: any) => {
       if (!result) {
-        callback(null,null)
-      }else{
-        bcrypt.compare(req.body[0].password, result.password,(err,res)=>{
-           if (err) callback(err,null)
-           callback(null,result)
+        callback(null, null)
+      } else {
+        bcrypt.compare(req.body.password, result.password, (err, res) => {
+          if (err) callback(err, null)
+          callback(null, result)
         })
-      }   
-      
-
- 
+      }
     })
-  
-
-     
   }
-
-
-  public async authUser2(body: any) {
-    /**
-        const user = await userModel.findOne({email: body.email });
-        if (user && bcrypt.compareSync(body.password, user.password)) {
-          const { hash, ...userWithoutHash } = user.toObject();
-          const token = jwt.sign({ sub: user.id }, config.secret);
-          return {
-            ...userWithoutHash,
-            token
-          };
-        }
-     */
-  }
-
-
 
   public save(body: any, callback: (error: Error | null, id: any | null) => void) {
     console.log("Saving data", body);

@@ -36,20 +36,17 @@ export class Metric {
 export class MetricsHandler {
   private db: any
 
-  constructor(dbPath: string) {
-    this.db = LevelDB.open(dbPath)
+  constructor() {
+   
   }
 
-  public closeDB(){
-    this.db.close()
-  }
-
-  public save( body:any, callback: (error: Error | null,metric: any|null) => void) {
-    console.log("Saving data", body);
+  
+  public saveOne( req:any, callback: (error: Error | null,metric: any|null) => void) {
+    console.log("Saving data", req.body);
     var crt_met = new metricModel({
-      timestamp: body.timestamp,
-      value: body.value,
-      userId: 1
+      timestamp: req.body.timestamp,
+      value: req.body.value,
+      userId: req.session.userId
     })
 
     crt_met.save((err,metric)=>{
@@ -58,37 +55,11 @@ export class MetricsHandler {
       callback(null,metric)
     })
 
-  }
-/**
-  public getUserId(id:string,callback:(err:Error|null,user_id:any)=>void) {
-   
-    metricModel.findById(id,(err,result)=>{
-      if (err) callback(err,null);
-      console.log("user_id :", result._id)
-      var userid =result._id
-      callback(null,result._id)
-    })
-
-  }) */
-
-  public save2(metrics: any[], callback: (error: Error | null) => void) {
-    
-    
-    console.log("Saving data", metrics);
-    const stream = WriteStream(this.db)
-      .on('error', callback)
-      .on('close', callback)
-    metrics.forEach((m: Metric) => {
-      stream.write({ key: `metric:${m.timestamp}`, value: m.value })
-    })
-    stream.end()
-  }
-
+  } 
 
   //OKK
-  public getAll(callback: (err: Error | null, result: any[]|null) => void) {
-    
-    metricModel.find((err,result)=>{
+  public getAll(req,callback: (err: Error | null, result: any) => void) {
+    metricModel.find({userId:req.session.userId},(err,result)=>{
       if (err) callback(err,null);
       console.log("result is :", result)
       callback(null,result)
@@ -96,74 +67,23 @@ export class MetricsHandler {
   }
   
   //OKK
-  public getOne(id:string,callback: (err: Error | null, result: any|null) => void) {
-    
-    metricModel.findById(id,(err,result)=>{
+  public getOne(req,id:string,callback: (err: Error | null, result: any|null) => void) {
+    metricModel.find({userId:req.session.userId,_id:id},(err,result)=>{
       if (err) callback(err,null);
       console.log("result is :", result)
       callback(null,result)
     })
   }
 
-
-
-  public getAll2(callback: (error: Error | null, result?: Metric[]) => void) {
-    var result = new Array();
-    const rs = this.db.createReadStream()
-      .on('data', function (data) {
-        result.push(data)
-      })
-      .on('error', function (err) {
-        console.log('Oh my!', err)
-      })
-      .on('close', function () {
-        console.log('Stream closed')
-      })
-      .on('end', function () {
-        console.log('Stream ended')
-        callback(null, result);
-
-      })
-    }
-  
-
-  
-  public delete(id: string, callback: (error: Error | null) => void) {
-   
-    this.db
-      .del(id, (err: Error) => {
-        if (err) { 
-          console.log('Error finding')
-          callback(err)
-          return
-         }
-       console.log("Element deleted")
-        callback(err)
-      })
+  // Need to detect if element not deleted
+  public deleteOne(req,id:string,callback: (err: Error | null, result: any|null) => void) {
+    console.log('uid: ',req.session.userId,": ","id",id)
+    metricModel.deleteOne({userId:req.session.userId,_id:id},(err)=>{
+      if (err) callback(err,null);
+      console.log("Element deleted")
+      callback(null,"metric deleted")
+    })
   }
-
-
-
-  public get(id: string, callback: (error: Error | null, result?: Metric) => void) {
-    var result = new Array()
-    const rs = this.db
-      .get(id, (err: Error, value: any) => {
-        if (err) { 
-          console.log('Error finding')
-          callback(err)
-          return
-         }
-
-        var crt_met = new Metric(id, value)
-        
-
-        console.log(crt_met)
-        callback(null, crt_met)
-
-      })
-  }
-
-
 
 }
 
