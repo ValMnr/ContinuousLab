@@ -1,11 +1,6 @@
-
 const Mongoose = require("mongoose");
-
-
-import { MetricsHandler, metricModel } from './src/metrics'
-import { UserHandler, userModel } from './src/user'
-import { Timestamp } from 'bson';
-
+import { metricModel } from './src/metrics'
+import { userModel } from './src/user'
 
 Mongoose.connect("mongodb://localhost:27017/nodelab", { useNewUrlParser: true });
 
@@ -33,15 +28,16 @@ async function populateUsers() {
     var listName: String[] = ["Eliz","Cecelia","Jean","Paul","Louise","Marie","JAck","Jhon","Camille","Nico"]
     var userAmount = 26;
 
+    console.log('Starting to populate mongoDB database')
+
     for (var i: number = 0; i < userAmount; i++) {
         var new_user = new userModel({
-            username: listName[i%10],
+            username: listName[i%10],                       //Random name from list above
             email: String.fromCharCode(i + 65) + "@mail.fr", //Set Emails to letter in alphabet : a@mail.fr
             password: '123'
         })
         await new_user.save((err, user) => {
             if (err) console.log(err)
-            console.log("Success saving user ",  user._id)
           })
         await populateMetrics(new_user._id)
     }
@@ -63,10 +59,9 @@ async function populateMetrics(userId: string) {
         })
         await new_metric.save((err, met) => {
             if (err) console.log(err)
-            console.log("Success metric " , met._id ,' for user : ',userId)
           })
-            
     }
+    return
 
 
 }
