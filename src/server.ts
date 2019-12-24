@@ -89,11 +89,10 @@ app.post('/login', (req: any, res: any) => {
   dbUser.authUser(req, (err: Error | null, result?: any) => {
     //console.log('err=',err,'||res=',res)
     if (err) {
-      console.log("deb1")
       res.redirect('/signup')
       console.log('res = ',result)
     }else{
-      console.log("deb2")
+      console.log("singin ok")
 
       console.log('res2 = ',result)
 
@@ -245,3 +244,5 @@ app.listen(port, (err: Error) => {
   }
   console.log(`server is listening on port ${port}`)
 })
+
+export default app
