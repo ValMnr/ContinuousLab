@@ -22,7 +22,7 @@ export class UserHandler {
       if (err) throw 'Email already taken ' + req.body.email
       const newUser = new userModel({
         username: req.body.username,
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
         password: bcrypt.hashSync(req.body.password, 10)
       })
       newUser.save((err, user) => {
@@ -31,24 +31,39 @@ export class UserHandler {
           callback(null, user)
         }
       })
-    })
+	})
+}
+ 
 
-  }
-
-
-  public authUser(req: any, callback: (error: Error | null, id: any) => void) {
-
-    const user = userModel.findOne({ email: req.body.email }, (err: Error | null, result?: any) => {
+  public authUser(req: any , callback: (error: Error | null, id: any) => void) {
+	console.log(req.body)
+    const user = userModel.findOne({ email: req.body.email.toLowerCase() }, (err: Error | null, result?: any) => {
       if (!result) {
-        callback(null, null)
+        callback(err,null)
       } else {
         bcrypt.compare(req.body.password, result.password, (err, res) => {
           if (err) callback(err, null)
-          callback(null, result)
+          callback(null, res)
         })
       }
     })
   }
+/*
+  public authUser2(req: any) {
+	console.log(req.body)
+    const user = userModel.findOne({ email: req.body.email }, (err: Error | null, result?: any) => {
+      if (!result) {
+        callback(err,null)
+      } else {
+        bcrypt.compare(req.body.password, result.password, (err, res) => {
+          if (err) callback(err, null)
+          callback(null, res)
+        })
+      }
+    })
+  }
+
+  */
 
   public save(body: any, callback: (error: Error | null, id: any | null) => void) {
     console.log("Saving data", body);
