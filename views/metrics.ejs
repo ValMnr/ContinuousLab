@@ -12,10 +12,10 @@
 
 	    <button class="btn btn-primary btn-block" type="button" href="/logout" onClick='document.location.href="/logout"'>Logout</button>
 
-	    <form>
+	    <form action="/metrics" method="post">
 	    	<label> Add metrics :</label>
-	    	<input type="text" name=""> 
-	    	<input type="text" name=""> 
+	    	<input type="number" name="timestamp"> 
+	    	<input type="value" name="value"> 
 	    	<button type="submit">Valider</button>
 	    </form>
 
@@ -26,16 +26,12 @@
 		<br>
 		<br>
 
+
 		<div class="row">
-
-			<div class="col 1">
-
+			<div class="col-1">
 			</div>
-
-			<div class="col 3">
+			<div class="col-3">
 				<div>
-
-
 					<div id="metrics"></div>
 					<script>
 
@@ -49,14 +45,15 @@
 								// Work with JSON data here
 								console.log(data)
 								const content = data.map(d => {
-								console.log(d.timestamp, ' | ', d.value)
-								var date = Date(d.timestamp.year, d.timestamp.month,d.timestamp.day)
+									console.log(d.timestamp, ' | ', d.value)
+									var date = Date(d.timestamp)
 
-								crtPoint = { x: date, y: d.value }
-								dataPoints1.push(crtPoint)
-								return 'timestamp: ' + d.timestamp + ', value: ' + d.value + '';
-							})
-							$('#metrics').append(content.join("\n"));
+									crtPoint = { x: date, y: d.value }
+									dataPoints1.push(crtPoint)
+									return 'timestamp: ' + d.timestamp + ', value: ' + d.value + '';
+								})
+								
+								$('#metrics').append(content.join("\n"));
 							})
 							.catch(err => {
 								// Do something for an error here
@@ -119,9 +116,6 @@
 								xValueFormatString: "DD MMM, YYYY",
 								color: "#F08080",
 								dataPoints: dataPoints1
-								/*dataPoints : [
-
-								] */
 							}]
 						});
 						chart.render();

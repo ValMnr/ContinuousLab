@@ -153,7 +153,7 @@ app.post('/metrics', metricCheck, (req: any, res: any) => {
       console.log("Problem saving metric")
       res.json(err)
     }
-    res.json("Data saved, metric_id:" + metric._id)
+    res.redirect('metricdisplay')
   })
 })
 
