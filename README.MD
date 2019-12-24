@@ -26,6 +26,9 @@ This project is a continuous lab where we use differents tools to acquire skills
 ##Unit testing
 - We had some issues with testing, because we don't know how to mock req.session (mandatory for posting metrics)
 
+##CI environment
+- https://travis-ci.com/ValMnr/ContinuousLab/builds
+
 ##Tag and Branches
 
 ### Tags
