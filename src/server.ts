@@ -90,51 +90,17 @@ app.post('/login', (req: any, res: any) => {
     //console.log('err=',err,'||res=',res)
     if (err) {
       res.redirect('/signup')
-      console.log('res = ',result)
     }else{
-      console.log("singin ok")
-
-      console.log('res2 = ',result)
-
       req.session.userId = result._id
       req.session.logged = true
       console.log(req.session)
   
-      //res.json({ 'login successful, crt_user_id': req.session.userId })
-      res.redirect('/metrics')
+      res.redirect('/metricdisplay')
     }
   
   })
 })
-/*
-app.post('/login2', (req: any, res: any) => {
 
-
-  dbUser.authUser2(req)
-  .
-  
-  {
-    //console.log('err=',err,'||res=',res)
-    if (err) {
-      console.log("deb1")
-      res.redirect('/signup')
-      console.log('res = ',result)
-    }else{
-      console.log("deb2")
-
-      console.log('res2 = ',result)
-
-      req.session.userId = result._id
-      req.session.logged = true
-      console.log(req.session)
-  
-      //res.json({ 'login successful, crt_user_id': req.session.userId })
-      res.redirect('/metrics')
-    }
-  
-  })
-})
- */
 
 
 app.get('/signup', (req: any, res: any) => {
@@ -149,7 +115,7 @@ app.post('/signup', (req: any, res: any) => {
     req.session.userId = result._id
     req.session.logged = true
     res.json({ 'Signup successful, crt_user_id': req.session.userId })
-
+    res.redirect('/metricdisplay')
   })
 })
 
@@ -169,13 +135,15 @@ app.get('/metrics', (req: any, res: any) => {
       console.log("Problem finding all metrics")
       return err
     }
-
-//    res.json(result)
-
+    res.json(result)
   })
-    res.render('metrics')
-
 })
+
+app.get('/metricdisplay', (req: any, res: any) => {
+  res.status(200);
+  res.render('metrics')
+
+});
 
 app.post('/metrics', metricCheck, (req: any, res: any) => {
 
