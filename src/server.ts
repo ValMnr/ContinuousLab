@@ -33,7 +33,7 @@ app.use(session({
 
 app.use(errorHandler)
 
-
+ 
 Mongoose.connect("mongodb://localhost:27017/nodelab", { useNewUrlParser: true });
 
 const user_id = '1';
@@ -47,18 +47,18 @@ const isUserMetric = (req: any, res: any, next: any) => {
 
 }
 
+//A TEST
+
 const authChek = (req: any, res: any, next: any) => {
 
   if (!req.session.logged) {
     console.log('not logged')
+    res.json('You are not logged')
     res.redirect('/')
   }
   else
     console.log('logged')
   next()
-
-
-
 }
 
 const metricCheck = (req: any, res: any, next: any) => {
@@ -83,22 +83,59 @@ app.get('/login', (req: any, res: any) => {
 
 });
 
+
 app.post('/login', (req: any, res: any) => {
 
   dbUser.authUser(req, (err: Error | null, result?: any) => {
+    //console.log('err=',err,'||res=',res)
     if (err) {
+      console.log("deb1")
       res.redirect('/signup')
-      res.json(err)
+      console.log('res = ',result)
+    }else{
+      console.log("deb2")
+
+      console.log('res2 = ',result)
+
+      req.session.userId = result._id
+      req.session.logged = true
+      console.log(req.session)
+  
+      //res.json({ 'login successful, crt_user_id': req.session.userId })
+      res.redirect('/metrics')
     }
-    req.session.userId = result._id
-    req.session.logged = true
-    console.log(req.session)
-
-    res.json({ 'login successful, crt_user_id': req.session.userId })
-
+  
   })
 })
+/*
+app.post('/login2', (req: any, res: any) => {
 
+
+  dbUser.authUser2(req)
+  .
+  
+  {
+    //console.log('err=',err,'||res=',res)
+    if (err) {
+      console.log("deb1")
+      res.redirect('/signup')
+      console.log('res = ',result)
+    }else{
+      console.log("deb2")
+
+      console.log('res2 = ',result)
+
+      req.session.userId = result._id
+      req.session.logged = true
+      console.log(req.session)
+  
+      //res.json({ 'login successful, crt_user_id': req.session.userId })
+      res.redirect('/metrics')
+    }
+  
+  })
+})
+ */
 
 
 app.get('/signup', (req: any, res: any) => {
@@ -116,6 +153,7 @@ app.post('/signup', (req: any, res: any) => {
 
   })
 })
+
 
 
 app.get('/logout', authChek, (req: any, res: any) => {
