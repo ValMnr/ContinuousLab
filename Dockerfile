@@ -8,5 +8,5 @@ RUN npm install
 COPY . .
 #Expose port and start application
 EXPOSE 8080
-CMD [ "npm", "populate" ]
+CMD [ "npm", "start" ]
 
