@@ -1,116 +1,113 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <% include partials/head %>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<% include partials/head %>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 </head>
 
 
 <body>
 
- 	<div>
- 		<br>
- 		<br>
- 		<br>
+	<div>
+		<br>
+		<br>
+		<br>
 
- 		<div class="row">
- 			
- 			<div class="col 1">
-			
-			</div>
- 			
- 			<div class="col 3">
- 				<div>
+		<div class="row">
 
- 				
-      				 <div id="metrics"></div>
-						<script>
-						   
-						      	console.log("coucou")
-						        e.preventDefault();
-						        $.getJSON("/metrics.json", {}, (data) => {
-						          const content = data.map(d => {
-						            return 'timestamp: '+d.timestamp+', value: '+d.value+'';
-						          })
-						          $('#metrics').append(content.join("\n"));
-						        });
-						      
-						</script>
- 				</div>
- 			</div>
+			<div class="col 1">
 
- 			<div class="col 1">
-			
 			</div>
 
+			<div class="col 3">
+				<div>
 
- 			<div class="col 6">
+
+					<div id="metrics"></div>
+					<script>
+
+						var dataPoints1 = []
+
+						fetch('./metrics')
+							.then(response => {
+								return response.json()
+							})
+							.then(data => {
+								// Work with JSON data here
+								console.log(data)
+								const content = data.map(d => {
+								console.log(d.timestamp, ' | ', d.value)
+								var date = Date(d.timestamp)
+
+								crtPoint = { x: date, y: d.value }
+								dataPoints1.push(crtPoint)
+								return 'timestamp: ' + d.timestamp + ', value: ' + d.value + '';
+							})
+							$('#metrics').append(content.join("\n"));
+							})
+							.catch(err => {
+								// Do something for an error here
+							})
+
+
+						console.log("coucou")
+					
+
+					</script>
+				</div>
+			</div>
+
+			<div class="col 1">
+
+			</div>
+
+
+			<div class="col 6">
 
 
 				<div id="chartContainer" style="height: 300px; width: 600px;"></div>
 
 				<script>
-				window.onload = function () {
+					window.onload = function () {
 
-				var chart = new CanvasJS.Chart("chartContainer", {
-					animationEnabled: true,
-					theme: "light2",
-					title:{
-						text: "Affichage metrics"
-					},
-					axisX:{
-						valueFormatString: "DD MMM",
-						crosshair: {
-							enabled: true,
-							snapToDataPoint: true
-						}
-					},
-					axisY: {
-						title: "Value",
-						crosshair: {
-							enabled: true
-						}
-					},
-					data: [{        
-						type: "line",
-						xValueFormatString: "DD MMM, YYYY",
-						color: "#F08080",     
-						dataPoints: [
-							{ x: new Date(2017, 0, 3), y: 650 },
-							{ x: new Date(2017, 0, 4), y: 700 },
-							{ x: new Date(2017, 0, 5), y: 710 },
-							{ x: new Date(2017, 0, 6), y: 658 },
-							{ x: new Date(2017, 0, 7), y: 734 },
-							{ x: new Date(2017, 0, 8), y: 963 },
-							{ x: new Date(2017, 0, 9), y: 847 },
-							{ x: new Date(2017, 0, 10), y: 853 },
-							{ x: new Date(2017, 0, 11), y: 869 },
-							{ x: new Date(2017, 0, 12), y: 943 },
-							{ x: new Date(2017, 0, 13), y: 970 },
-							{ x: new Date(2017, 0, 14), y: 869 },
-							{ x: new Date(2017, 0, 15), y: 890 },
-							{ x: new Date(2017, 0, 16), y: 930 }
-						]
-					}]
-				});
-				chart.render();
+						var chart = new CanvasJS.Chart("chartContainer", {
+							animationEnabled: true,
+							theme: "light2",
+							title: {
+								text: "Affichage metrics"
+							},
+							axisX: {
+								valueFormatString: "DD MMM",
+								crosshair: {
+									enabled: true,
+									snapToDataPoint: true
+								}
+							},
+							axisY: {
+								title: "Value",
+								crosshair: {
+									enabled: true
+								}
+							},
+							data: [{
+								type: "line",
+								xValueFormatString: "DD MMM, YYYY",
+								color: "#F08080",
+								dataPoints: dataPoints1
+							}]
+						});
+						chart.render();
 
-				}
+					}
 				</script>
- 				
- 				
- 			</div>
-
- 			<div class="col 1">
-			
 			</div>
 
- 		</div>
-
-
- 	</div>
-
-
+			<div class="col 1">
+			</div>
+		</div>
+	</div>
 </body>
+
 </html>
