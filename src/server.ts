@@ -170,8 +170,12 @@ app.get('/metrics', (req: any, res: any) => {
       console.log("Problem finding all metrics")
       return err
     }
-    res.json(result)
+
+//    res.json(result)
+
   })
+    res.render('metrics')
+
 })
 
 app.post('/metrics', metricCheck, (req: any, res: any) => {
