@@ -22,9 +22,22 @@
  			
  			<div class="col 3">
  				<div>
- 						<ul> Hello</ul> 						
- 						<ul> Hello</ul>
- 						<ul> Hello</ul>
+
+ 					<button class="btn btn-success" id="show-metrics">
+        				Bring the metrics
+      				</button>
+      				 <div id="metrics"></div>
+						<script>
+						      $('#show-metrics').click((e) => {
+						        e.preventDefault();
+						        $.getJSON("/metrics.json", {}, (data) => {
+						          const content = data.map(d => {
+						            return 'timestamp: '+d.timestamp+', value: '+d.value+'';
+						          })
+						          $('#metrics').append(content.join("\n"));
+						        });
+						      })
+						</script>
  				</div>
  			</div>
 
