@@ -9,10 +9,11 @@ This project is a continuous lab where we use differents tools to acquire skills
 
 ## Running the project
 
-    $ npm start
+    $ npm start run
 
 ## Author
 Valentin MONNIER
+Raphael PARTOUCHE
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
