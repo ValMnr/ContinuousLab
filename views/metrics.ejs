@@ -23,12 +23,11 @@
  			<div class="col 3">
  				<div>
 
- 					<button class="btn btn-success" id="show-metrics">
-        				Bring the metrics
-      				</button>
+ 				
       				 <div id="metrics"></div>
 						<script>
-						      $('#show-metrics').click((e) => {
+						   
+						      	console.log("coucou")
 						        e.preventDefault();
 						        $.getJSON("/metrics.json", {}, (data) => {
 						          const content = data.map(d => {
@@ -36,7 +35,7 @@
 						          })
 						          $('#metrics').append(content.join("\n"));
 						        });
-						      })
+						      
 						</script>
  				</div>
  			</div>
