@@ -34,7 +34,6 @@ export class Metric {
 
 
 export class MetricsHandler {
-	private db: any
 
 	constructor() {
 
@@ -61,7 +60,6 @@ export class MetricsHandler {
 	public getAll(req, callback: (err: Error | null, result: any) => void) {
 		metricModel.find({ userId: req.session.userId }, (err, result) => {
 			if (err) callback(err, null);
-			console.log("result is :", result)
 			callback(null, result)
 		})
 	}

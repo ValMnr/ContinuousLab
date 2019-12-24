@@ -2,7 +2,7 @@ const Mongoose = require("mongoose");
 import { metricModel } from './src/metrics'
 import { userModel } from './src/user'
 
-Mongoose.connect("mongodb://mongo:27017/nodelab", { useNewUrlParser: true });
+Mongoose.connect("mongodb://localhost:27017/nodelab", { useNewUrlParser: true });
 
 
 function toTimestamp(newDate: Date) {

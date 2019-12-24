@@ -37,13 +37,17 @@ export class UserHandler {
 
   public authUser(req: any , callback: (error: Error | null, id: any) => void) {
 	console.log(req.body)
-    const user = userModel.findOne({ email: req.body.email.toLowerCase() }, (err: Error | null, result?: any) => {
-      if (!result) {
-        callback(err,null)
+    const user = userModel.findOne({ email: req.body.email   }, (err: Error | null, result?: any) => {
+      console.log('in authUSER |err= ',err,'res =',result)
+      if (result==null) {
+        console.log("couldn't find email")
+        callback(new Error("email doesn't exist in database"),null)
       } else {
+        console.log("email in db, checking PW : ", req.body.password,"|", result.password)
         bcrypt.compare(req.body.password, result.password, (err, res) => {
-          if (err) callback(err, null)
-          callback(null, res)
+          console.log('result doc =',result)
+          if (err) callback(new Error("Password incorrect"), null)
+          callback(null, result)
         })
       }
     })
