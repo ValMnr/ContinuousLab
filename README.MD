@@ -9,7 +9,7 @@ This project is a continuous lab where we use differents tools to acquire skills
 
 # NodeJs Part
 
-###Populate and script
+### Populate and script
 
 `$ npm run populate` in order to populate the application
 `$ npm run start` in order to start the application
@@ -23,13 +23,13 @@ This project is a continuous lab where we use differents tools to acquire skills
 `docker-compose up`
 
 	
-##Unit testing
+## Unit testing
 - We had some issues with testing, because we don't know how to mock req.session (mandatory for posting metrics)
 
-##CI environment
+## CI environment
 - https://travis-ci.com/ValMnr/ContinuousLab/builds
 
-##Tag and Branches
+## Tag and Branches
 
 ### Tags
 
